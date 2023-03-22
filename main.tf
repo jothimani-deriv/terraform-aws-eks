@@ -78,23 +78,6 @@ module "aws_eks" {
   tags = var.tags
 }
 
-# ---------------------------------------------------------------------------------------------------------------------
-# Amazon EMR on EKS Virtual Clusters
-# ---------------------------------------------------------------------------------------------------------------------
-module "emr_on_eks" {
-  source = "./modules/emr-on-eks"
-
-  for_each = { for key, value in var.emr_on_eks_teams : key => value
-    if var.enable_emr_on_eks && length(var.emr_on_eks_teams) > 0
-  }
-
-  emr_on_eks_teams              = each.value
-  eks_cluster_id                = module.aws_eks.cluster_id
-  iam_role_permissions_boundary = var.iam_role_permissions_boundary
-  tags                          = var.tags
-
-  depends_on = [kubernetes_config_map.aws_auth]
-}
 
 resource "kubernetes_config_map" "amazon_vpc_cni" {
   count = var.enable_windows_support ? 1 : 0
