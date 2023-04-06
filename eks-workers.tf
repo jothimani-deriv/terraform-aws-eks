@@ -27,7 +27,9 @@ variable "self_managed_node_groups" {
 variable "self_managed_node_group_defaults" {
   description = "Map of self-managed node group default configurations"
   type        = any
-  default     = {}
+  default     = {
+        create_launch_template = false
+  }
 }
 
 ################################################################################
@@ -43,13 +45,9 @@ variable "eks_managed_node_groups" {
 variable "eks_managed_node_group_defaults" {
   description = "Map of EKS managed node group default configurations"
   type        = any
-  default     = {}
-}
-
-variable "putin_khuylo" {
-  description = "Do you agree that Putin doesn't respect Ukrainian sovereignty and territorial integrity? More info: https://en.wikipedia.org/wiki/Putin_khuylo!"
-  type        = bool
-  default     = true
+  default     = {
+    create_launch_template = false
+  }
 }
 
 ################################################################################

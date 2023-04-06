@@ -23,13 +23,13 @@ variable "prefix_separator" {
 variable "cluster_name" {
   description = "Name of the EKS cluster"
   type        = string
-  default     = "demo"
+  default     = "new-cluster"
 }
 
 variable "cluster_version" {
   description = "Kubernetes `<major>.<minor>` version to use for the EKS cluster (i.e.: `1.24`)"
   type        = string
-  default     = "1.24"
+  default     = "1.25"
 }
 
 variable "cluster_enabled_log_types" {
@@ -47,13 +47,13 @@ variable "cluster_additional_security_group_ids" {
 variable "control_plane_subnet_ids" {
   description = "A list of subnet IDs where the EKS cluster control plane (ENIs) will be provisioned. Used for expanding the pool of subnets used by nodes/node groups without replacing the EKS control plane"
   type        = list(string)
-  default     = ["subnet-08fb0f2fadf79e0ec", "subnet-0519d4b9e4dc63878", "subnet-058a25987d985f737"]
+  default     = ["subnet-00196bb903925df01", "subnet-01c8f412ab45cb64f", "subnet-079f0c154a5321955"]
 }
 
 variable "subnet_ids" {
   description = "A list of subnet IDs where the nodes/node groups will be provisioned. If `control_plane_subnet_ids` is not provided, the EKS cluster control plane (ENIs) will be provisioned in these subnets"
   type        = list(string)
-  default     = ["subnet-08fb0f2fadf79e0ec", "subnet-0519d4b9e4dc63878", "subnet-058a25987d985f737"]
+  default     = ["subnet-00196bb903925df01", "subnet-01c8f412ab45cb64f", "subnet-079f0c154a5321955"]
 }
 
 variable "cluster_endpoint_private_access" {
@@ -247,7 +247,7 @@ variable "cluster_security_group_id" {
 variable "vpc_id" {
   description = "ID of the VPC where the cluster security group will be provisioned"
   type        = string
-  default     = "vpc-01b679f77465e32a2"
+  default     = "vpc-07f1eb779bc991afb"
 }
 
 variable "cluster_security_group_name" {
@@ -506,109 +506,4 @@ variable "fargate_profile_defaults" {
   description = "Map of Fargate Profile default configurations"
   type        = any
   default     = {}
-}
-
-################################################################################
-# Self Managed Node Group
-################################################################################
-
-variable "self_managed_node_groups" {
-  description = "Map of self-managed node group definitions to create"
-  type        = any
-  default     = {
-    one = {
-      name         = "mixed-1"
-      max_size     = 5
-      desired_size = 2
-
-      use_mixed_instances_policy = true
-      mixed_instances_policy = {
-        instances_distribution = {
-          on_demand_base_capacity                  = 0
-          on_demand_percentage_above_base_capacity = 10
-          spot_allocation_strategy                 = "capacity-optimized"
-        }
-      }
-    }
-  }
-}
-
-variable "self_managed_node_group_defaults" {
-  description = "Map of self-managed node group default configurations"
-  type        = any
-  default     = {}
-}
-
-################################################################################
-# EKS Managed Node Group
-################################################################################
-
-variable "eks_managed_node_groups" {
-  description = "Map of EKS managed node group definitions to create"
-  type        = any
-  default     = {}
-}
-
-variable "eks_managed_node_group_defaults" {
-  description = "Map of EKS managed node group default configurations"
-  type        = any
-  default     = {}
-}
-
-variable "putin_khuylo" {
-  description = "Do you agree that Putin doesn't respect Ukrainian sovereignty and territorial integrity? More info: https://en.wikipedia.org/wiki/Putin_khuylo!"
-  type        = bool
-  default     = true
-}
-
-################################################################################
-# aws-auth configmap
-################################################################################
-
-variable "manage_aws_auth_configmap" {
-  description = "Determines whether to manage the aws-auth configmap"
-  type        = bool
-  default     = false
-}
-
-variable "create_aws_auth_configmap" {
-  description = "Determines whether to create the aws-auth configmap. NOTE - this is only intended for scenarios where the configmap does not exist (i.e. - when using only self-managed node groups). Most users should use `manage_aws_auth_configmap`"
-  type        = bool
-  default     = false
-}
-
-variable "aws_auth_node_iam_role_arns_non_windows" {
-  description = "List of non-Windows based node IAM role ARNs to add to the aws-auth configmap"
-  type        = list(string)
-  default     = []
-}
-
-variable "aws_auth_node_iam_role_arns_windows" {
-  description = "List of Windows based node IAM role ARNs to add to the aws-auth configmap"
-  type        = list(string)
-  default     = []
-}
-
-variable "aws_auth_fargate_profile_pod_execution_role_arns" {
-  description = "List of Fargate profile pod execution role ARNs to add to the aws-auth configmap"
-  type        = list(string)
-  default     = []
-}
-
-variable "aws_auth_roles" {
-  description = "List of role maps to add to the aws-auth configmap"
-  type        = list(any)
-  default     = []
-}
-
-variable "aws_auth_users" {
-  description = "List of user maps to add to the aws-auth configmap"
-  type        = list(any)
-  default     = []
-}
-
-variable "aws_auth_accounts" {
-  description = "List of account maps to add to the aws-auth configmap"
-  type        = list(any)
-  default     = []
 }
