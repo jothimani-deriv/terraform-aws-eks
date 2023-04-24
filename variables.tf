@@ -47,13 +47,13 @@ variable "cluster_additional_security_group_ids" {
 variable "control_plane_subnet_ids" {
   description = "A list of subnet IDs where the EKS cluster control plane (ENIs) will be provisioned. Used for expanding the pool of subnets used by nodes/node groups without replacing the EKS control plane"
   type        = list(string)
-  default     = ["subnet-00196bb903925df01", "subnet-01c8f412ab45cb64f", "subnet-079f0c154a5321955"]
+  default     = ["subnet-0eb1ae1a956917d3a", "subnet-0bd0fb3209172c051", "subnet-010e10defcf22d4ec"]
 }
 
 variable "subnet_ids" {
   description = "A list of subnet IDs where the nodes/node groups will be provisioned. If `control_plane_subnet_ids` is not provided, the EKS cluster control plane (ENIs) will be provisioned in these subnets"
   type        = list(string)
-  default     = ["subnet-00196bb903925df01", "subnet-01c8f412ab45cb64f", "subnet-079f0c154a5321955"]
+  default     = ["subnet-0eb1ae1a956917d3a", "subnet-0bd0fb3209172c051", "subnet-010e10defcf22d4ec"]
 }
 
 variable "cluster_endpoint_private_access" {
@@ -247,7 +247,7 @@ variable "cluster_security_group_id" {
 variable "vpc_id" {
   description = "ID of the VPC where the cluster security group will be provisioned"
   type        = string
-  default     = "vpc-07f1eb779bc991afb"
+  default     = "vpc-0a3e7f585ebc37cb1"
 }
 
 variable "cluster_security_group_name" {
